@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { Container, WrapperFeedback } from './Feedback.styled';
-
+import { WrapperFeedback } from './Feedback.styled';
+import Statistics from 'components/Statistics/Statistics';
+import FeedbackOptions from '../FeedbackOptions/FeedbackOptions';
+import Section from 'components/Section/Section';
+import Notification from 'components/Notification/Notification';
 class Feedback extends Component {
   state = {
     good: 0,
@@ -31,28 +34,26 @@ class Feedback extends Component {
     const totalFeedback = this.countTotalFeedback();
 
     return (
-      <Container>
-        <h1>Please leave feedback</h1>
-        <WrapperFeedback>
-          {keys.map(key => (
-            <button
-              type="button"
-              key={key}
-              onClick={() => this.handleFeedback(key)}
-            >
-              {key}
-            </button>
-          ))}
-        </WrapperFeedback>
-        <h2>Statistics</h2>
-        <div>
-          <p>Good: {good}</p>
-          <p>Neutral: {neutral}</p>
-          <p>Bad: {bad}</p>
-          <p>Total: {totalFeedback}</p>
-          <p>Positive feedback: {this.countPositiveFeedbackPercentage()}%</p>
-        </div>
-      </Container>
+      <div>
+        <Section title="Please leave feedback">
+          <WrapperFeedback>
+            <FeedbackOptions keys={keys} handleFeedback={this.handleFeedback} />
+          </WrapperFeedback>
+        </Section>
+        <Section title="Statistics">
+          {totalFeedback === 0 ? (
+            <Notification message="There is no feedback" />
+          ) : (
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              Total={totalFeedback}
+              Positive={this.countPositiveFeedbackPercentage()}
+            />
+          )}
+        </Section>
+      </div>
     );
   }
 }

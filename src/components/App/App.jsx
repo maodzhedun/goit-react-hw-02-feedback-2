@@ -1,11 +1,12 @@
 import React from 'react';
-// import { App } from "./App.styled";
+import { ContainerApp} from './App.styled';
+
 import Feedback from '../Feedback/Feedback';
 
 export const App = () => {
   return (
-    <>
+    <ContainerApp>
       <Feedback />
-    </>
+    </ContainerApp>
   );
 };
